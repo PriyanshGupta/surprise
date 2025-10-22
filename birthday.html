@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday, my favorite person 💛</title>
+  <meta name="description" content="A tiny, heartfelt birthday website."/>
+  <style>
+    :root{
+      --bg:#0f1020; --bg2:#17182d; --ink:#f7f7ff; --muted:#b1b3c9; --line:#262851; --accent:#ffd166; --ok:#74faa7; --err:#ff8e9e;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; color:var(--ink); background:radial-gradient(1200px 800px at 10% 10%, #1c1d35 0, var(--bg) 40%), var(--bg);}    
+    a{color:var(--accent); text-decoration:none}
+    .wrap{max-width: 940px; margin: 0 auto; padding: 24px;}
+    .card{background:linear-gradient(180deg,#1b1c33,var(--bg2)); border:1px solid var(--line); border-radius:22px; padding:28px; box-shadow:0 28px 60px rgba(0,0,0,.35)}
+    h1{margin:0 0 8px; font-size: clamp(28px,5.5vw,46px);}    
+    p.lead{margin:0 0 18px; color:var(--muted)}
+    .pill{display:inline-block; padding:6px 10px; border-radius:999px; background:#23254a; color:#c9cae8; font-size:12px; border:1px solid var(--line)}
+    section{margin-top: 22px}
+    .row{display:flex; flex-wrap:wrap; gap:16px; align-items:center}
+    .btn{display:inline-flex; align-items:center; gap:10px; padding:14px 16px; border-radius:999px; border:1px solid var(--line); background:linear-gradient(180deg,#24264d,#1c1e41); color:var(--ink); cursor:pointer; font-weight:600; transition:.2s transform,.2s box-shadow}
+    .btn:hover{transform:translateY(-1px); box-shadow:0 10px 20px rgba(0,0,0,.35)}
+    .counter{font-size:20px; font-weight:700}
+    .small{font-size:13px; color:var(--muted)}
+    .ok{color:var(--ok)} .err{color:var(--err)}
+
+    /* Timeline */
+    .timeline{position:relative; margin: 10px 0 0 0; padding: 0 0 0 22px;}
+    .timeline::before{content:""; position:absolute; left:10px; top:0; bottom:0; width:2px; background:linear-gradient(180deg, #383a7a, #242652)}
+    .tli{position:relative; margin: 18px 0; list-style:none}
+    .tli::marker{content:""}
+    .dot{position:absolute; left:-2px; top: 12px; width:12px; height:12px; border-radius:999px; background:var(--accent); box-shadow:0 0 0 3px rgba(255,209,102,.12)}
+    .tile{display:grid; grid-template-columns: 140px 1fr; gap:14px; background:rgba(255,255,255,0.02); border:1px solid var(--line); border-radius:16px; padding:12px;}
+    .date{color:#e9e9ff; font-weight:700}
+    .thumb{width:140px; height:100px; border-radius:10px; overflow:hidden}
+    .thumb img{width:100%; height:100%; object-fit:cover}
+    .txt{color:var(--muted)}
+
+    @media (max-width: 640px){
+      .tile{ grid-template-columns: 1fr; }
+      .thumb{ width:100%; height:180px }
+    }
+
+    /* Photo grid */
+    .grid{display:grid; gap:14px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));}
+    figure.polaroid{position:relative; background:#fefefe; color:#222; border-radius:12px; padding:10px 10px 40px; aspect-ratio: 3/4; overflow:hidden; border:1px solid #e7e7e7}
+    figure.polaroid img{width:100%; height:100%; object-fit:cover; border-radius:8px}
+    figure.polaroid figcaption{position:absolute; bottom:8px; left:10px; right:10px; font:600 12px/1.2 ui-sans-serif,system-ui}
+
+    footer{margin:28px 0 6px; text-align:center; color:#8386a8; font-size:12px}
+    .spacer{height:6px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <span class="pill">for you 🤍</span>
+      <h1>Happy Birthday, my favorite person.</h1>
+      <p class="lead">This isn’t fancy — it’s us. Scroll slowly. Take your time. I’m right here.</p>
+
+      <!-- Countdown + Page button row -->
+      <section class="row" aria-label="Countdown and Pager">
+        <div class="counter" id="count">Calculating…</div>
+        <button id="pageBtn" class="btn" title="Click to page me">🔔 Page me</button>
+        <div id="status" class="small" role="status"></div>
+      </section>
+
+      <!-- Journey Timeline (duplicate .tli blocks to add more; remove to delete) -->
+      <section aria-label="Our journey">
+        <div class="pill">Our journey</div>
+        <ol class="timeline" id="timeline">
+          <!-- ITEM 1 -->
+          <li class="tli">
+            <span class="dot" aria-hidden="true"></span>
+            <div class="tile">
+              <div class="date">2023‑06‑11</div>
+              <div class="thumb"><img src="photos/journey-1.jpg" alt="Us at the cafe"></div>
+              <div class="txt">The day we first talked for hours and forgot about the world.</div>
+            </div>
+          </li>
+          <!-- ITEM 2 -->
+          <li class="tli">
+            <span class="dot" aria-hidden="true"></span>
+            <div class="tile">
+              <div class="date">2023‑12‑24</div>
+              <div class="thumb"><img src="photos/journey-2.jpg" alt="Winter evening selfie"></div>
+              <div class="txt">That winter walk when you kept my hands warm in your pockets.</div>
+            </div>
+          </li>
+          <!-- ITEM 3 -->
+          <li class="tli">
+            <span class="dot" aria-hidden="true"></span>
+            <div class="tile">
+              <div class="date">2024‑05‑02</div>
+              <div class="thumb"><img src="photos/journey-3.jpg" alt="Trip snapshot"></div>
+              <div class="txt">Our first tiny trip — imperfect plans, perfect company.</div>
+            </div>
+          </li>
+          <!-- Add or remove items by duplicating/removing a full <li class="tli"> block -->
+        </ol>
+      </section>
+
+      <!-- Love Letter (placeholder) -->
+      <section aria-label="Love letter">
+        <div class="pill">A love letter</div>
+        <p class="small">[Write your letter here. For now, placeholder text below.]</p>
+        <p>My love, if distance is the price of finding you, I’d pay it twice. Thank you for every message, every goofy photo, every midnight pep talk. I’m counting the days until I can say this without a screen between us.</p>
+        <p>Until then: eat well, sleep early, save the good stories for me, and remember that somewhere, I’m smiling because of you. — Yours.</p>
+      </section>
+
+      <!-- Random Photos (expandable grid: add/remove <figure> blocks) -->
+      <section aria-label="Random photos I adore">
+        <div class="pill">Random photos I adore</div>
+        <div class="grid" id="photos">
+          <figure class="polaroid">
+            <img src="photos/random-1.jpg" alt="Her smiling">
+            <figcaption>Sunlight + you</figcaption>
+          </figure>
+          <figure class="polaroid">
+            <img src="photos/random-2.jpg" alt="Goofy face">
+            <figcaption>Goober face 😂</figcaption>
+          </figure>
+          <figure class="polaroid">
+            <img src="photos/random-3.jpg" alt="Candid laugh">
+            <figcaption>That laugh</figcaption>
+          </figure>
+          <!-- Add or remove more <figure class="polaroid"> blocks as needed -->
+        </div>
+      </section>
+
+      <footer>Made with ridiculous love by me :)</footer>
+    </div>
+  </div>
+
+  <script>
+    /*** 1) COUNTDOWN: set your reunion date/time (use her local TZ if you prefer) ***/
+    const reunion = new Date('2025-12-20T18:00:00'); // ← CHANGE THIS
+    const countEl = document.getElementById('count');
+    const two = (n) => String(n).padStart(2,'0');
+    const render = () => {
+      const now = new Date();
+      const diff = Math.max(0, reunion - now);
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor(diff % 86400000 / 3600000);
+      const m = Math.floor(diff % 3600000 / 60000);
+      const s = Math.floor(diff % 60000 / 1000);
+      countEl.textContent = `${d} days • ${two(h)}:${two(m)}:${two(s)}`;
+    };
+    render();
+    setInterval(render, 1000);
+
+    /*** 2) PAGE ME: simple click → push notification via ntfy or IFTTT ***/
+    // Option A (no backend): ntfy — install the ntfy Android app and subscribe to a hard-to-guess topic.
+    // Replace TOPIC with your secret string, e.g., 'midnight-asteroid-72b4d7c1'.
+    // Security note: anyone who knows this topic can publish to it; choose something long & random.
+    const TOPIC = 'vrinda-is-cute'; // ← CHANGE THIS if using ntfy
+
+    const statusEl = document.getElementById('status');
+    const pageBtn = document.getElementById('pageBtn');
+
+    async function pageMe(){
+      statusEl.textContent = 'Sending pager…';
+      statusEl.className = 'small';
+      // First try a normal POST (works if CORS is allowed). If it fails, try no-cors as a best-effort.
+      try{
+        const r = await fetch(`https://ntfy.sh/${encodeURIComponent(TOPIC)}`, {
+          method: 'POST',
+          body: 'She paged you 💛',
+          headers: { 'Title':'I need you', 'Priority':'high', 'Tags':'telephone_receiver' }
+        });
+        if(!r.ok) throw new Error('HTTP '+r.status);
+        statusEl.textContent = 'Pager sent — I’m on my way.';
+        statusEl.className = 'small ok';
+      }catch(e){
+        try{
+          await fetch(`https://ntfy.sh/${encodeURIComponent(TOPIC)}`, { method:'POST', mode:'no-cors', body:'She paged you 💛' });
+          statusEl.textContent = 'Pager sent (best‑effort).';
+          statusEl.className = 'small ok';
+        }catch(err){
+          statusEl.textContent = 'Couldn’t send. Try again later.';
+          statusEl.className = 'small err';
+        }
+      }
+    }
+
+    pageBtn.addEventListener('click', pageMe);
+
+    // Option B (instead of ntfy): IFTTT Webhook URL
+    // const IFTTT_URL = 'https://maker.ifttt.com/trigger/YOUR_EVENT/with/key/YOUR_KEY';
+    // async function pageMe(){
+    //   statusEl.textContent = 'Sending pager…';
+    //   try{
+    //     await fetch(IFTTT_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ value1:'I need you' }) });
+    //     statusEl.textContent = 'Pager sent — I’m on my way.'; statusEl.className = 'small ok';
+    //   }catch(e){ statusEl.textContent = 'Couldn’t send. Try again later.'; statusEl.className = 'small err'; }
+    // }
+
+  </script>
+</body>
+</html>
