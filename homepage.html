@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday, my favorite person 💕✨</title>
+  <meta name="description" content="A tiny, heartfelt birthday website."/>
+  <style>
+    :root{
+      --bg:#fef7f7; --bg2:#fff0f5; --ink:#8b4a6b; --muted:#b87a9a; --line:#f0c8d8; --accent:#ff69b4; --ok:#98fb98; --err:#ffb6c1;
+      --pink:#ffb6c1; --lavender:#e6e6fa; --rose:#ffc0cb; --mint:#f0fff0;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family: 'Comic Sans MS', cursive, ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; color:var(--ink); background:radial-gradient(1200px 800px at 10% 10%, #ffe4e1 0, var(--bg) 40%), var(--bg); position:relative;}    
+    body::before{content:'✨'; position:fixed; top:20px; left:20px; font-size:24px; color:var(--accent); animation:sparkle 2s ease-in-out infinite;}
+    body::after{content:'💕'; position:fixed; top:20px; right:20px; font-size:24px; animation:float 3s ease-in-out infinite;}
+    @keyframes sparkle{0%,100%{opacity:0.5; transform:scale(1);} 50%{opacity:1; transform:scale(1.2);}}
+    @keyframes float{0%,100%{transform:translateY(0px);} 50%{transform:translateY(-10px);}}
+    a{color:var(--accent); text-decoration:none}
+    .wrap{max-width: 940px; margin: 0 auto; padding: 24px;}
+    .card{background:linear-gradient(180deg,#fff0f5,#fef7f7); border:2px solid var(--line); border-radius:30px; padding:32px; box-shadow:0 20px 40px rgba(255,182,193,0.3), inset 0 1px 0 rgba(255,255,255,0.8); position:relative;}
+    .card::before{content:'💖'; position:absolute; top:-15px; left:50%; transform:translateX(-50%); font-size:30px; background:var(--bg); padding:0 10px;}
+    .card::after{content:'🌸'; position:absolute; top:20px; right:20px; font-size:20px; animation:wiggle 4s ease-in-out infinite;}
+    @keyframes wiggle{0%,100%{transform:rotate(0deg);} 25%{transform:rotate(-5deg);} 75%{transform:rotate(5deg);}}
+    h1{margin:0 0 8px; font-size: clamp(26px,5vw,42px); color:#d63384; text-shadow:2px 2px 4px rgba(255,182,193,0.3);}    
+    p.lead{margin:0 0 18px; color:var(--muted); font-style:italic;}
+    .pill{display:inline-block; padding:8px 16px; border-radius:25px; background:linear-gradient(45deg, var(--pink), var(--lavender)); color:#8b4a6b; font-size:13px; border:2px solid var(--line); font-weight:600; box-shadow:0 4px 8px rgba(255,182,193,0.2);}
+    section{margin-top: 28px}
+    .row{display:flex; flex-wrap:wrap; gap:16px; align-items:center}
+    .btn{display:inline-flex; align-items:center; gap:10px; padding:16px 20px; border-radius:25px; border:2px solid var(--accent); background:linear-gradient(45deg,#ff69b4,#ffb6c1); color:white; cursor:pointer; font-weight:700; transition:.3s all; box-shadow:0 6px 12px rgba(255,105,180,0.3);}
+    .btn:hover{transform:translateY(-3px) scale(1.05); box-shadow:0 12px 24px rgba(255,105,180,0.4); background:linear-gradient(45deg,#ff1493,#ff69b4);}
+    .counter{font-size:22px; font-weight:700; color:#d63384; text-shadow:1px 1px 2px rgba(255,182,193,0.3);}
+    .small{font-size:13px; color:var(--muted)}
+    .ok{color:var(--ok)} .err{color:var(--err)}
+    
+    /* Navigation */
+    .nav{display:flex; justify-content:center; gap:12px; margin-top:24px; flex-wrap:wrap;}
+    .nav-btn{display:inline-flex; align-items:center; gap:8px; padding:12px 16px; border-radius:20px; border:2px solid var(--line); background:linear-gradient(45deg, rgba(255,255,255,0.8), rgba(255,240,245,0.9)); color:var(--ink); cursor:pointer; font-weight:600; transition:.3s all; text-decoration:none; font-size:14px;}
+    .nav-btn:hover{transform:translateY(-2px); box-shadow:0 8px 16px rgba(255,182,193,0.3); background:linear-gradient(45deg, var(--pink), var(--lavender));}
+    
+    /* Timezone info */
+    .timezone-info{font-size:12px; color:var(--muted); margin-top:8px; font-style:italic;}
+    
+    /* Section dividers */
+    .divider{display:flex; align-items:center; justify-content:center; margin:32px 0; position:relative;}
+    .divider::before{content:''; flex:1; height:2px; background:linear-gradient(90deg, transparent, var(--line), transparent);}
+    .divider::after{content:'✨'; margin:0 16px; font-size:16px; color:var(--accent); animation:sparkle 2s ease-in-out infinite;}
+    
+    /* Popup notification styles */
+    .popup{position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:linear-gradient(45deg, #ff69b4, #ffb6c1); color:white; padding:16px 24px; border-radius:20px; box-shadow:0 8px 24px rgba(255,105,180,0.4); z-index:1000; font-weight:600; animation:popupShow 0.3s ease-out;}
+    .popup::before{content:'✨'; margin-right:8px;}
+    @keyframes popupShow{0%{opacity:0; transform:translate(-50%, -50%) scale(0.8);} 100%{opacity:1; transform:translate(-50%, -50%) scale(1);}}
+    .popup-overlay{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.3); z-index:999;}
+    
+    footer{margin:28px 0 6px; text-align:center; color:#b87a9a; font-size:13px; font-style:italic; text-shadow:1px 1px 2px rgba(255,182,193,0.2);}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <span class="pill">for my bb 💕</span>
+      <h1>Happy Birthday Bindu 💖</h1>
+      <p class="lead">I know you have been worrying about us. So for your birthday gift, I want to show you just how much you mean to me and how much I love you. I hope you have a great day! I love you so much and I can't wait to see you soon! 💕</p>
+
+      <!-- Countdown section -->
+      <section aria-label="Countdown to reunion">
+        <h2 style="text-align:center; margin:0 0 16px; color:#d63384; font-size:20px; text-shadow:1px 1px 2px rgba(255,182,193,0.3);">Time until our next hug 💕</h2>
+        <div style="text-align:center;">
+          <div class="counter" id="count">Calculating…</div>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="divider"></div>
+
+      <!-- Page button section -->
+      <section aria-label="Page me" style="text-align:center; margin-top:20px;">
+        <h2 style="text-align:center; margin:0 0 16px; color:#d63384; font-size:18px; text-shadow:1px 1px 2px rgba(255,182,193,0.3);">Want to reach me? Send me a message below! 💌</h2>
+        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+          <button id="urgentBtn" class="btn" title="I need you now!" style="background:linear-gradient(45deg,#ff1493,#ff69b4);">🚨 I need you now!</button>
+          <button id="missBtn" class="btn" title="I miss you, call back soon">💔 I miss you, call back soon</button>
+          <button id="kissBtn" class="btn" title="Sending you kisses" style="background:linear-gradient(45deg,#ffb6c1,#ffc0cb);">💋 Sending you kisses</button>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="divider"></div>
+      
+      <!-- Navigation -->
+      <h2 style="text-align:center; margin:0 0 16px; color:#d63384; font-size:18px; text-shadow:1px 1px 2px rgba(255,182,193,0.3);">Click on each button below to see surprises I made just for you 💕</h2>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="journey.html" class="nav-btn">💕 How I've seen you grow</a>
+        <a href="love-letter.html" class="nav-btn">💌 What I think about you</a>
+        <a href="photos.html" class="nav-btn">📸 My favorite photos of you</a>
+      </nav>
+
+      <footer>Made with ridiculous love by me 💕</footer>
+    </div>
+  </div>
+
+  <script>
+    /*** COUNTDOWN: set your reunion date/time in India timezone ***/
+    // Using India Standard Time (IST) - UTC+5:30
+    const reunion = new Date('2025-12-11T05:00:00+05:30'); // India timezone
+    const countEl = document.getElementById('count');
+    const two = (n) => String(n).padStart(2,'0');
+    
+    const render = () => {
+      const now = new Date();
+      const diff = Math.max(0, reunion - now);
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor(diff % 86400000 / 3600000);
+      const m = Math.floor(diff % 3600000 / 60000);
+      const s = Math.floor(diff % 60000 / 1000);
+      countEl.textContent = `${d} days • ${two(h)}:${two(m)}:${two(s)}`;
+    };
+    render();
+    setInterval(render, 1000);
+
+    /*** PAGE ME: three different buttons with different priorities ***/
+    const TOPIC = 'vrinda-is-cute'; // ← CHANGE THIS if using ntfy
+
+    const statusEl = document.getElementById('status');
+    const urgentBtn = document.getElementById('urgentBtn');
+    const missBtn = document.getElementById('missBtn');
+    const kissBtn = document.getElementById('kissBtn');
+
+    function showPopup(message){
+      // Create overlay
+      const overlay = document.createElement('div');
+      overlay.className = 'popup-overlay';
+      
+      // Create popup
+      const popup = document.createElement('div');
+      popup.className = 'popup';
+      popup.textContent = message;
+      
+      // Add to page
+      document.body.appendChild(overlay);
+      document.body.appendChild(popup);
+      
+      // Remove after 2 seconds
+      setTimeout(() => {
+        popup.style.animation = 'popupShow 0.3s ease-out reverse';
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          document.body.removeChild(popup);
+          document.body.removeChild(overlay);
+        }, 300);
+      }, 2000);
+    }
+
+    async function sendPage(message, priority, title, emoji){
+      showPopup('Sending message...');
+      try{
+        const r = await fetch(`https://ntfy.sh/${encodeURIComponent(TOPIC)}`, {
+          method: 'POST',
+          body: message,
+          headers: { 
+            'Title': title, 
+            'Priority': priority, 
+            'Tags': emoji 
+          }
+        });
+        if(!r.ok) throw new Error('HTTP '+r.status);
+        showPopup('Message was sent! 💕');
+      }catch(e){
+        try{
+          await fetch(`https://ntfy.sh/${encodeURIComponent(TOPIC)}`, { 
+            method:'POST', 
+            mode:'no-cors', 
+            body: message 
+          });
+          showPopup('Message was sent! 💕');
+        }catch(err){
+          showPopup('Couldn\'t send. Try again later.');
+        }
+      }
+    }
+
+    urgentBtn.addEventListener('click', () => {
+      sendPage('I need you now! 🚨', 'max', 'URGENT: I need you!', 'rotating_light');
+    });
+
+    missBtn.addEventListener('click', () => {
+      sendPage('I miss you, call back soon 💔', 'high', 'I miss you', 'broken_heart');
+    });
+
+    kissBtn.addEventListener('click', () => {
+      sendPage('Sending you kisses 💋', 'default', 'Kisses for you', 'kiss');
+    });
+  </script>
+</body>
+</html>

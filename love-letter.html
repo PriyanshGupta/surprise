@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Love Letter to You 💕</title>
+  <meta name="description" content="A heartfelt love letter written just for you"/>
+  <style>
+    :root{
+      --bg:#fef7f7; --bg2:#fff0f5; --ink:#8b4a6b; --muted:#b87a9a; --line:#f0c8d8; --accent:#ff69b4; --ok:#98fb98; --err:#ffb6c1;
+      --pink:#ffb6c1; --lavender:#e6e6fa; --rose:#ffc0cb; --mint:#f0fff0;
+      --paper:#fefefe; --paper-shadow:#f0f0f0;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family: 'Comic Sans MS', cursive, ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; color:var(--ink); background:radial-gradient(1200px 800px at 10% 10%, #ffe4e1 0, var(--bg) 40%), var(--bg); position:relative;}    
+    body::before{content:'✨'; position:fixed; top:20px; left:20px; font-size:24px; color:var(--accent); animation:sparkle 2s ease-in-out infinite;}
+    body::after{content:'💕'; position:fixed; top:20px; right:20px; font-size:24px; animation:float 3s ease-in-out infinite;}
+    @keyframes sparkle{0%,100%{opacity:0.5; transform:scale(1);} 50%{opacity:1; transform:scale(1.2);}}
+    @keyframes float{0%,100%{transform:translateY(0px);} 50%{transform:translateY(-10px);}}
+    
+    .wrap{max-width: 800px; margin: 0 auto; padding: 24px;}
+    
+    /* Letter Paper Design */
+    .letter-container{position: relative; margin-top: 20px;}
+    .letter-paper{background: var(--paper); border: 2px solid var(--line); border-radius: 15px; padding: 40px; box-shadow: 0 20px 40px rgba(255,182,193,0.3), inset 0 1px 0 rgba(255,255,255,0.8); position: relative; transform: rotate(-1deg);}
+    
+    /* Notebook paper lines effect */
+    .letter-paper::before{content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(transparent, transparent 25px, rgba(255,182,193,0.5) 26px); pointer-events: none; border-radius: 13px;}
+    
+    /* Letter header */
+    .letter-header{text-align: center; margin-bottom: 30px; position: relative;}
+    .letter-date{font-size: 14px; color: var(--muted); font-style: italic; margin-bottom: 6px; padding-top: 15px;}
+    .letter-greeting{font-size: 18px; color: var(--ink); font-weight: 600; margin-bottom: 18px;}
+    
+    /* Letter content */
+    .letter-content{line-height: 26px; font-size: 16px; color: var(--ink); text-align: justify; margin-bottom: 30px;}
+    .letter-content p{margin-bottom: 26px; margin-top: 0;}
+    .letter-content p:last-child{margin-bottom: 0;}
+    .letter-content .highlight{color: var(--accent); font-weight: 600;}
+    
+    /* Letter signature */
+    .letter-signature{text-align: right; margin-top: 40px;}
+    .signature-line{display: inline-block; width: 200px; height: 2px; background: var(--accent); margin-bottom: 10px;}
+    .signature-text{font-size: 16px; color: var(--ink); font-weight: 600;margin-top: -7px;}
+    
+    /* Decorative elements */
+    .letter-decoration{position: absolute; top: -10px; right: -10px; font-size: 30px; color: var(--accent); animation: wiggle 4s ease-in-out infinite;}
+    @keyframes wiggle{0%,100%{transform:rotate(0deg);} 25%{transform:rotate(-5deg);} 75%{transform:rotate(5deg);}}
+    
+    /* Back button */
+    .back-btn{display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 25px; border: 2px solid var(--accent); background: linear-gradient(45deg, var(--pink), var(--lavender)); color: var(--ink); text-decoration: none; font-weight: 600; transition: all 0.3s ease; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(255,182,193,0.2);}
+    .back-btn:hover{transform: translateY(-2px); box-shadow: 0 8px 16px rgba(255,182,193,0.3); background: linear-gradient(45deg, var(--accent), var(--pink)); color: white;}
+    
+    /* Envelope effect */
+    .envelope{position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 100px; height: 60px; background: linear-gradient(45deg, var(--pink), var(--lavender)); border-radius: 10px; box-shadow: 0 8px 16px rgba(255,182,193,0.3); z-index: 1;}
+    .envelope::before{content: '💌'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 24px;}
+    
+    /* Heart animations */
+    .floating-heart{position: absolute; font-size: 20px; color: var(--accent); animation: floatHeart 6s ease-in-out infinite; opacity: 0.7;}
+    .floating-heart:nth-child(1){top: 20%; left: 10%; animation-delay: 0s;}
+    .floating-heart:nth-child(2){top: 60%; right: 15%; animation-delay: 2s;}
+    .floating-heart:nth-child(3){bottom: 30%; left: 20%; animation-delay: 4s;}
+    @keyframes floatHeart{0%,100%{transform: translateY(0px) rotate(0deg); opacity: 0.7;} 50%{transform: translateY(-20px) rotate(10deg); opacity: 1;}}
+    
+    /* Responsive design */
+    @media (max-width: 768px){
+      .letter-paper{padding: 30px 20px; transform: rotate(0deg);}
+      .letter-paper:hover{transform: scale(1.01);}
+      .letter-content{font-size: 15px;}
+      .signature-line{width: 150px;}
+    }
+    
+    footer{margin:28px 0 6px; text-align:center; color:#b87a9a; font-size:13px; font-style:italic; text-shadow:1px 1px 2px rgba(255,182,193,0.2);}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a href="homepage.html" class="back-btn">← Back to Home</a>
+    
+    <!-- Floating hearts -->
+    <div class="floating-heart">💕</div>
+    <div class="floating-heart">💖</div>
+    <div class="floating-heart">💗</div>
+    
+    <div class="letter-container">
+      <div class="envelope"></div>
+      <div class="letter-paper">
+        <div class="letter-decoration">🌸</div>
+        
+        <div class="letter-header">
+          <div class="letter-date">December 2024</div>
+          <div class="letter-greeting">My Dearest Bindu,</div>
+        </div>
+        
+        <div class="letter-content">
+          <p>As I sit here writing this letter, my heart is overflowing with love for you. Every day that passes, I find myself falling deeper in love with the amazing person you are.</p>
+          
+          <p>You are the <span class="highlight">most beautiful soul</span> I have ever encountered. Your smile lights up my world, your laughter is music to my ears, and your kindness touches everyone around you. I am constantly amazed by your strength, your intelligence, and your beautiful heart.</p>
+          
+          <p>I want you to know that you are <span class="highlight">perfect just as you are</span>. Every little quirk, every laugh, every moment of vulnerability - they all make you uniquely and wonderfully you. I love every part of you, even the parts you might not love about yourself.</p>
+          
+          <p>When I'm with you, everything feels right. You make me a better person, and you make every day brighter. Your love has given me a happiness I never knew was possible. I am so grateful to have you in my life.</p>
+          
+          <p>I promise to always be here for you, to support you through everything, and to love you unconditionally. You are my <span class="highlight">best friend, my partner, and my greatest love</span>.</p>
+          
+          <p>Thank you for being you, for loving me, and for making my life so incredibly beautiful. I can't wait to spend forever with you.</p>
+        </div>
+        
+        <div class="letter-signature">
+          <div class="signature-line"></div>
+          <div class="signature-text">With all my love,<br>Priyansh 💕</div>
+        </div>
+      </div>
+    </div>
+
+    <footer>Made with endless love for my favorite person 💕</footer>
+  </div>
+
+  <script>
+    // Add click effect to the letter paper
+    document.querySelector('.letter-paper').addEventListener('click', function() {
+      this.style.transform = 'rotate(0deg) scale(1.05)';
+      setTimeout(() => {
+        this.style.transform = 'rotate(-1deg) scale(1)';
+      }, 200);
+    });
+    
+    // Add fade-in animation to letter content
+    const letterContent = document.querySelector('.letter-content');
+    letterContent.style.opacity = '0';
+    letterContent.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+      letterContent.style.transition = 'opacity 1s ease, transform 1s ease';
+      letterContent.style.opacity = '1';
+      letterContent.style.transform = 'translateY(0)';
+    }, 500);
+  </script>
+</body>
+</html>

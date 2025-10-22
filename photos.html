@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Favorite Photos of You 📸</title>
+  <meta name="description" content="A collection of my favorite photos of you"/>
+  <style>
+    :root{
+      --bg:#fef7f7; --bg2:#fff0f5; --ink:#8b4a6b; --muted:#b87a9a; --line:#f0c8d8; --accent:#ff69b4; --ok:#98fb98; --err:#ffb6c1;
+      --pink:#ffb6c1; --lavender:#e6e6fa; --rose:#ffc0cb; --mint:#f0fff0;
+      --polaroid-bg:#fefefe; --polaroid-shadow:#e0e0e0;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family: 'Comic Sans MS', cursive, ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; color:var(--ink); background:radial-gradient(1200px 800px at 10% 10%, #ffe4e1 0, var(--bg) 40%), var(--bg); position:relative;}    
+    body::before{content:'✨'; position:fixed; top:20px; left:20px; font-size:24px; color:var(--accent); animation:sparkle 2s ease-in-out infinite;}
+    body::after{content:'💕'; position:fixed; top:20px; right:20px; font-size:24px; animation:float 3s ease-in-out infinite;}
+    @keyframes sparkle{0%,100%{opacity:0.5; transform:scale(1);} 50%{opacity:1; transform:scale(1.2);}}
+    @keyframes float{0%,100%{transform:translateY(0px);} 50%{transform:translateY(-10px);}}
+    
+    .wrap{max-width: 1200px; margin: 0 auto; padding: 24px;}
+    .card{background:linear-gradient(180deg,#fff0f5,#fef7f7); border:2px solid var(--line); border-radius:30px; padding:32px; box-shadow:0 20px 40px rgba(255,182,193,0.3), inset 0 1px 0 rgba(255,255,255,0.8); position:relative;}
+    .card::before{content:'💖'; position:absolute; top:-15px; left:50%; transform:translateX(-50%); font-size:30px; background:var(--bg); padding:0 10px;}
+    .card::after{content:'🌸'; position:absolute; top:20px; right:20px; font-size:20px; animation:wiggle 4s ease-in-out infinite;}
+    @keyframes wiggle{0%,100%{transform:rotate(0deg);} 25%{transform:rotate(-5deg);} 75%{transform:rotate(5deg);}}
+    
+    h1{margin:0 0 8px; font-size: clamp(26px,5vw,42px); color:#d63384; text-shadow:2px 2px 4px rgba(255,182,193,0.3); text-align:center;}    
+    p.lead{margin:0 0 18px; color:var(--muted); font-style:italic; text-align:center;}
+    .pill{display:inline-block; padding:8px 16px; border-radius:25px; background:linear-gradient(45deg, var(--pink), var(--lavender)); color:#8b4a6b; font-size:13px; border:2px solid var(--line); font-weight:600; box-shadow:0 4px 8px rgba(255,182,193,0.2);}
+    
+    /* Polaroid Gallery Styles */
+    .photo-gallery{margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 20px 0;}
+    
+    .polaroid{background: var(--polaroid-bg); padding: 15px 15px 60px 15px; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.1); transform: rotate(-2deg); transition: all 0.3s ease; position: relative; opacity: 0; animation: fadeInUp 0.8s ease-out forwards;}
+    
+    .polaroid:nth-child(odd){transform: rotate(2deg);}
+    .polaroid:nth-child(3n){transform: rotate(-1deg);}
+    .polaroid:nth-child(4n){transform: rotate(1.5deg);}
+    
+    .polaroid:hover{transform: rotate(0deg) scale(1.05); box-shadow: 0 15px 30px rgba(0,0,0,0.2), 0 5px 10px rgba(0,0,0,0.15); z-index: 10;}
+    
+    @keyframes fadeInUp{
+      to{opacity: 1; transform: translateY(0);}
+    }
+    
+    .polaroid:nth-child(1){animation-delay: 0.1s;}
+    .polaroid:nth-child(2){animation-delay: 0.2s;}
+    .polaroid:nth-child(3){animation-delay: 0.3s;}
+    .polaroid:nth-child(4){animation-delay: 0.4s;}
+    .polaroid:nth-child(5){animation-delay: 0.5s;}
+    .polaroid:nth-child(6){animation-delay: 0.6s;}
+    .polaroid:nth-child(7){animation-delay: 0.7s;}
+    .polaroid:nth-child(8){animation-delay: 0.8s;}
+    .polaroid:nth-child(9){animation-delay: 0.9s;}
+    
+    .polaroid-image{width: 100%; height: 200px; border-radius: 4px; object-fit: cover; border: 1px solid rgba(0,0,0,0.1);}
+    
+    .polaroid-caption{position: absolute; bottom: 15px; left: 15px; right: 15px; text-align: center; font-size: 14px; color: var(--ink); font-weight: 600; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);}
+    
+    /* Decorative tape effect */
+    .polaroid::before{content: ''; position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 40px; height: 8px; background: linear-gradient(45deg, var(--pink), var(--lavender)); border-radius: 2px; opacity: 0.7;}
+    
+    /* Back button */
+    .back-btn{display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 25px; border: 2px solid var(--accent); background: linear-gradient(45deg, var(--pink), var(--lavender)); color: var(--ink); text-decoration: none; font-weight: 600; transition: all 0.3s ease; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(255,182,193,0.2);}
+    .back-btn:hover{transform: translateY(-2px); box-shadow: 0 8px 16px rgba(255,182,193,0.3); background: linear-gradient(45deg, var(--accent), var(--pink)); color: white;}
+    
+    /* Floating hearts around photos */
+    .floating-heart{position: absolute; font-size: 16px; color: var(--accent); animation: floatHeart 6s ease-in-out infinite; opacity: 0.6; pointer-events: none;}
+    .floating-heart:nth-child(1){top: 10%; left: 5%; animation-delay: 0s;}
+    .floating-heart:nth-child(2){top: 20%; right: 8%; animation-delay: 1s;}
+    .floating-heart:nth-child(3){bottom: 15%; left: 10%; animation-delay: 2s;}
+    .floating-heart:nth-child(4){bottom: 25%; right: 5%; animation-delay: 3s;}
+    .floating-heart:nth-child(5){top: 50%; left: 2%; animation-delay: 4s;}
+    .floating-heart:nth-child(6){top: 60%; right: 3%; animation-delay: 5s;}
+    
+    @keyframes floatHeart{0%,100%{transform: translateY(0px) rotate(0deg); opacity: 0.6;} 50%{transform: translateY(-15px) rotate(10deg); opacity: 1;}}
+    
+    /* Responsive design */
+    @media (max-width: 768px){
+      .photo-gallery{grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;}
+      .polaroid{padding: 12px 12px 50px 12px;}
+      .polaroid-image{height: 180px;}
+      .polaroid-caption{font-size: 13px;}
+      .polaroid:hover{transform: scale(1.02);}
+    }
+    
+    @media (max-width: 480px){
+      .photo-gallery{grid-template-columns: 1fr; gap: 15px;}
+      .polaroid{transform: rotate(0deg) !important;}
+      .polaroid:hover{transform: scale(1.02) !important;}
+    }
+    
+    footer{margin:28px 0 6px; text-align:center; color:#b87a9a; font-size:13px; font-style:italic; text-shadow:1px 1px 2px rgba(255,182,193,0.2);}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <a href="homepage.html" class="back-btn">← Back to Home</a>
+      
+      <!-- Floating hearts -->
+      <div class="floating-heart">💕</div>
+      <div class="floating-heart">💖</div>
+      <div class="floating-heart">💗</div>
+      <div class="floating-heart">💝</div>
+      <div class="floating-heart">💘</div>
+      <div class="floating-heart">💞</div>
+      
+      <h1>My Favorite Photos of You 📸</h1>
+      <p class="lead">Definitely not your favorite photos of you, but they are my favorite photos of you 💕</p>
+
+      <div class="photo-gallery">
+        <!-- Photo 1 -->
+        <div class="polaroid">
+          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&crop=center" alt="Beautiful smile" class="polaroid-image" />
+          <div class="polaroid-caption">Your beautiful smile 💕</div>
+        </div>
+
+        <!-- Photo 2 -->
+        <div class="polaroid">
+          <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop&crop=center" alt="Laughing together" class="polaroid-image" />
+          <div class="polaroid-caption">When you laugh, my world lights up ✨</div>
+        </div>
+
+        <!-- Photo 3 -->
+        <div class="polaroid">
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center" alt="Sunset moment" class="polaroid-image" />
+          <div class="polaroid-caption">Perfect sunset, perfect you 🌅</div>
+        </div>
+
+        <!-- Photo 4 -->
+        <div class="polaroid">
+          <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=300&h=300&fit=crop&crop=center" alt="Coffee date" class="polaroid-image" />
+          <div class="polaroid-caption">Our cozy coffee moments ☕</div>
+        </div>
+
+        <!-- Photo 5 -->
+        <div class="polaroid">
+          <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&h=300&fit=crop&crop=center" alt="Adventure together" class="polaroid-image" />
+          <div class="polaroid-caption">Adventures with you are the best 🥾</div>
+        </div>
+
+        <!-- Photo 6 -->
+        <div class="polaroid">
+          <img src="https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=300&h=300&fit=crop&crop=center" alt="Christmas magic" class="polaroid-image" />
+          <div class="polaroid-caption">Christmas magic with you 🎄</div>
+        </div>
+
+        <!-- Photo 7 -->
+        <div class="polaroid">
+          <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=300&h=300&fit=crop&crop=center" alt="Cooking together" class="polaroid-image" />
+          <div class="polaroid-caption">Cooking disasters = best memories 👨‍🍳</div>
+        </div>
+
+        <!-- Photo 8 -->
+        <div class="polaroid">
+          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=300&h=300&fit=crop&crop=center" alt="Fireworks night" class="polaroid-image" />
+          <div class="polaroid-caption">The night I first said "I love you" 🎆</div>
+        </div>
+
+        <!-- Photo 9 -->
+        <div class="polaroid">
+          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&crop=center" alt="Everyday moments" class="polaroid-image" />
+          <div class="polaroid-caption">Everyday moments are my favorite 💖</div>
+        </div>
+      </div>
+
+      <footer>Made with endless love for my favorite person 💕</footer>
+    </div>
+  </div>
+
+  <script>
+    // Add click effect to polaroids
+    document.querySelectorAll('.polaroid').forEach(polaroid => {
+      polaroid.addEventListener('click', function() {
+        this.style.transform = 'rotate(0deg) scale(1.1)';
+        setTimeout(() => {
+          this.style.transform = 'rotate(0deg) scale(1.05)';
+        }, 200);
+      });
+    });
+
+    // Add intersection observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all polaroids
+    document.querySelectorAll('.polaroid').forEach(polaroid => {
+      observer.observe(polaroid);
+    });
+
+    // Add random rotation on page load
+    document.querySelectorAll('.polaroid').forEach((polaroid, index) => {
+      const randomRotation = (Math.random() - 0.5) * 4; // Random rotation between -2 and 2 degrees
+      polaroid.style.transform = `rotate(${randomRotation}deg)`;
+      
+      // Restore random rotation after hover
+      polaroid.addEventListener('mouseleave', function() {
+        setTimeout(() => {
+          this.style.transform = `rotate(${randomRotation}deg)`;
+        }, 300);
+      });
+    });
+  </script>
+</body>
+</html>
