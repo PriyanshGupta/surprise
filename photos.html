@@ -53,7 +53,7 @@
     .polaroid:nth-child(8){animation-delay: 0.8s;}
     .polaroid:nth-child(9){animation-delay: 0.9s;}
     
-    .polaroid-image{width: 100%; height: 200px; border-radius: 4px; object-fit: cover; border: 1px solid rgba(0,0,0,0.1);}
+    .polaroid-image{width: 100%; height: 300px; border-radius: 4px; object-fit: contain; border: 1px solid rgba(0,0,0,0.1); background: #f8f8f8;}
     
     .polaroid-caption{position: absolute; bottom: 15px; left: 15px; right: 15px; text-align: center; font-size: 14px; color: var(--ink); font-weight: 600; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);}
     
@@ -109,60 +109,8 @@
       <h1>My Favorite Photos of You 📸</h1>
       <p class="lead">Definitely not your favorite photos of you, but they are my favorite photos of you 💕</p>
 
-      <div class="photo-gallery">
-        <!-- Photo 1 -->
-        <div class="polaroid">
-          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&crop=center" alt="Beautiful smile" class="polaroid-image" />
-          <div class="polaroid-caption">Your beautiful smile 💕</div>
-        </div>
-
-        <!-- Photo 2 -->
-        <div class="polaroid">
-          <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop&crop=center" alt="Laughing together" class="polaroid-image" />
-          <div class="polaroid-caption">When you laugh, my world lights up ✨</div>
-        </div>
-
-        <!-- Photo 3 -->
-        <div class="polaroid">
-          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center" alt="Sunset moment" class="polaroid-image" />
-          <div class="polaroid-caption">Perfect sunset, perfect you 🌅</div>
-        </div>
-
-        <!-- Photo 4 -->
-        <div class="polaroid">
-          <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=300&h=300&fit=crop&crop=center" alt="Coffee date" class="polaroid-image" />
-          <div class="polaroid-caption">Our cozy coffee moments ☕</div>
-        </div>
-
-        <!-- Photo 5 -->
-        <div class="polaroid">
-          <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&h=300&fit=crop&crop=center" alt="Adventure together" class="polaroid-image" />
-          <div class="polaroid-caption">Adventures with you are the best 🥾</div>
-        </div>
-
-        <!-- Photo 6 -->
-        <div class="polaroid">
-          <img src="https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=300&h=300&fit=crop&crop=center" alt="Christmas magic" class="polaroid-image" />
-          <div class="polaroid-caption">Christmas magic with you 🎄</div>
-        </div>
-
-        <!-- Photo 7 -->
-        <div class="polaroid">
-          <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=300&h=300&fit=crop&crop=center" alt="Cooking together" class="polaroid-image" />
-          <div class="polaroid-caption">Cooking disasters = best memories 👨‍🍳</div>
-        </div>
-
-        <!-- Photo 8 -->
-        <div class="polaroid">
-          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=300&h=300&fit=crop&crop=center" alt="Fireworks night" class="polaroid-image" />
-          <div class="polaroid-caption">The night I first said "I love you" 🎆</div>
-        </div>
-
-        <!-- Photo 9 -->
-        <div class="polaroid">
-          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&crop=center" alt="Everyday moments" class="polaroid-image" />
-          <div class="polaroid-caption">Everyday moments are my favorite 💖</div>
-        </div>
+      <div class="photo-gallery" id="photoGallery">
+        <!-- Photos will be dynamically loaded here -->
       </div>
 
       <footer>Made with endless love for my favorite person 💕</footer>
@@ -170,47 +118,212 @@
   </div>
 
   <script>
-    // Add click effect to polaroids
-    document.querySelectorAll('.polaroid').forEach(polaroid => {
-      polaroid.addEventListener('click', function() {
-        this.style.transform = 'rotate(0deg) scale(1.1)';
-        setTimeout(() => {
-          this.style.transform = 'rotate(0deg) scale(1.05)';
-        }, 200);
-      });
-    });
-
-    // Add intersection observer for animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+    // Map of image filenames to custom captions (sorted alphabetically)
+    const imageCaptions = {
+      '20210718_183629.jpg': 'Oh we were so young then',
+      '20210911_231219.jpg': 'Discord Nights 🌙',
+      '20211210_155305.jpg': 'Us in 72 in your room!',
+      '20211228_164233.jpg': 'Pouting Queen 💅',
+      '20211228_165829.jpg': 'This one is just cute 😊',
+      '20220105_224426.jpg': 'One of your fav movie nights! 🍿',
+      '20220226_162737.jpg': 'When we discovered daytime hotels 💖',
+      '20220406_170220.jpg': 'I could just eat you up 🤤',
+      '20220615_192509.jpg': 'Sunkissed cutieee ☀️',
+      '20221022_170009.jpg': 'We were always cute together 💕',
+      '20230304_141215.jpg': 'My Ethnic Hottie 🤩',
+      '20230304_141918.jpg': 'KISSABLE!! 💋',
+      '20230407_171423.jpg': 'Flowers are the second most beautiful thing in this photo 🌸',
+      '20230408_094823.jpg': 'Last good morning that trip xD 🌅',
+      '20230408_095409.jpg': 'We did look really good that day 🐰',
+      '20231209_212926.jpg': 'Why I like sitting across you on dates 🎁',
+      '20231219_173043.jpg': 'BEANIE on our fav trip 🎅',
+      '20231219_182234.jpg': 'Christmas Dinner in Ooty! 🎄',
+      '20231219_182536.jpg': 'My Heart hehe 🎊',
+      '20240317_220509.jpg': 'Literally made for each other 🌼',
+      '20240320_222510.jpg': 'You know you loved the food here 🍜',
+      '20240324_172456.jpg': 'Hehehe I took you to Samsung',
+      '20240512_223851.jpg': 'Sundress Senorita',
+      '20240712_221851.jpg': 'God I could kiss this face for hours 🌙',
+      '20241027_151518.jpg': 'The day we stuffed ourselves at chilis 🎃',
+      '20241219_172850.jpg': 'Goa was a few degrees hotter that day ✨',
+      '20241219_174855.jpg': 'The sunset would be jealous of you here 🎄',
+      '20250110_221732.jpg': 'MBA Date Nights <3 <3',
+      '20250224_195515.jpg': 'I miss cuddling you so much 💖',
+      '20250323_010718.jpg': 'Can I take you for a dance? 🌙',
+      '20250323_131112.jpg': 'ISB was not all bad 🌱',
+      '20250406_132520.jpg': 'Meghana Biryani >> Everything ☀️',
+      '20250413_233143.jpg': 'Our Formal Date Night 🌆',
+      '20250912_141950.jpg': 'Our first international trip! 🌍',
+      '20250913_094638.jpg': 'Certified CoffeePaglu',
+      '20250913_182349.jpg': 'That Balcony in Budapest ✨',
+      '20250914_133432.jpg': 'Budapest was a vibe yaar 🌙',
+      '20250914_162302.jpg': 'Star in a square ☀️',
+      '20250914_171027.jpg': 'Hahahah we fought before this 🌺',
+      '20250914_190357.jpg': 'Cruise 🌸',
+      '20250914_191648.jpg': 'Best Sunset of my life 🌅',
+      '20250914_200543.jpg': 'Drunkieyyyyy 🍻',
+      '20250915_091945.jpg': 'Oye Hoye Mera Hottie 🤩',
+      '20250915_094444.jpg': 'Entire menu is there but all I want to eat is you 🍝',
+      '20250915_103849.jpg': 'Prettier than the entire cafe 💅',
+      '20250915_104539.jpg': 'Why so hot? 🥵',
+      '20250915_154857.jpg': 'We need to do thermal baths again 🌤️',
+      '20250915_194845.jpg': 'OH MY GOD THIS IS SO HOT 🌇',
+      '20250915_214106.jpg': 'Partyyyyy Girllll 🌃',
+      '20250918_140418.jpg': 'Yes this was your prettiest outfit 🎉',
+      '20250918_152659.jpg': 'I really like this angle of yours 📷',
+      '20250920_101126(0).jpg': 'Pre Drunk Oktoberfest Scene 🌅',
+      'IMG-20211027-WA0024.jpg': 'Do you have any idea how cute you are? 💬',
+      'IMG-20211027-WA0031.jpg': 'I used to make really good memes lol 💭',
+      'IMG-20230116-WA0009.jpg': 'The look that makes me realise I made the wrong decision 🤦‍♂️',
+      'IMG-20230718-WA0007.jpg': 'Hehehehehehhehehehe 🤣',
+      'IMG-20230723-WA0039.jpg': 'We watched BarbenHeimer together 🎥',
+      'IMG_20210627_195152_002.jpg': 'First time we were in Dharamkunj 🌸',
+      'IMG_20211226_213653.jpg': 'I wish you could be with me in the pool 😭',
+      'PXL_20211227_185342102.jpg': 'Our first trip wasnt all bad 🌱',
+      'Screenshot_20250812_204725_WhatsApp.jpg': 'I rarely take screenshots, but when I do xD',
+      'Screenshot_20250910_230848_WhatsApp.jpg': 'Your go-to reply to my logical arguments 🤦‍♂️',
+      'Screenshot_20251002_122114_WhatsApp.jpg': 'When nothing else works, be cute 💅',
+      'Screenshot_20251010_230212_WhatsApp.jpg': 'Sundariyyyyyy 🌸',
+      'Screenshot_20251019_144323_WhatsApp.jpg': 'HAHAHHAHAHAHAHAHAHHAHA I have this photo xD',
+      'Snapchat-1324323718.jpg': 'Some photos are just for me I guess 🤷‍♂️',
+      'Snapchat-1581932597.jpg': 'It is always the food smh 🍔',
+      'Snapchat-1634697412.jpg': 'Believe it or not, this is actually hot 💫',
+      'Snapchat-1976490775.jpg': 'You might hate it but I love this xD',
+      'Snapchat-258113162.jpg': 'Our online B99 Dates!! <3',
+      'Snapchat-485097041.jpg': 'Your first birthdayyy 🎉',
+      'ZomboMeme 27102021215604.jpg': 'Your most hated meme xD',
+      'ZomboMeme 27102021220322.jpg': 'Just consultant things 😄',
+      'ZomboMeme 27102021221022.jpg': 'Cute Photo, Cute meme 😂',
+      'ZomboMeme 27102021221636.jpg': 'Sorry not sorry 🤣'
     };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-        }
-      });
-    }, observerOptions);
-
-    // Observe all polaroids
-    document.querySelectorAll('.polaroid').forEach(polaroid => {
-      observer.observe(polaroid);
-    });
-
-    // Add random rotation on page load
-    document.querySelectorAll('.polaroid').forEach((polaroid, index) => {
-      const randomRotation = (Math.random() - 0.5) * 4; // Random rotation between -2 and 2 degrees
-      polaroid.style.transform = `rotate(${randomRotation}deg)`;
+    // Function to create polaroid element
+    function createPolaroid(imageSrc, caption, index) {
+      const polaroid = document.createElement('div');
+      polaroid.className = 'polaroid';
+      polaroid.style.animationDelay = `${index * 0.1}s`;
       
-      // Restore random rotation after hover
-      polaroid.addEventListener('mouseleave', function() {
-        setTimeout(() => {
-          this.style.transform = `rotate(${randomRotation}deg)`;
-        }, 300);
+      const img = document.createElement('img');
+      img.src = `memories/${imageSrc}`;
+      img.alt = caption;
+      img.className = 'polaroid-image';
+      img.onerror = function() {
+        console.warn(`Failed to load image: ${imageSrc}`);
+        this.style.display = 'none';
+        this.parentElement.style.display = 'none';
+      };
+      
+      const captionDiv = document.createElement('div');
+      captionDiv.className = 'polaroid-caption';
+      captionDiv.textContent = caption;
+      
+      polaroid.appendChild(img);
+      polaroid.appendChild(captionDiv);
+      
+      return polaroid;
+    }
+
+    // Function to shuffle array (Fisher-Yates algorithm)
+    function shuffleArray(array) {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+
+    // Function to load all images
+    function loadImages() {
+      const gallery = document.getElementById('photoGallery');
+      
+      // Get all image filenames from the map and shuffle them
+      const imageFiles = Object.keys(imageCaptions);
+      const shuffledFiles = shuffleArray(imageFiles);
+      
+      shuffledFiles.forEach((filename, index) => {
+        // Get the custom caption from the map, or fallback to cleaned filename
+        let caption = imageCaptions[filename];
+        
+        // If no custom caption exists, create a cleaner caption from filename
+        if (!caption) {
+          caption = filename;
+          
+          // Remove file extension
+          caption = caption.replace(/\.(jpg|jpeg|png|gif)$/i, '');
+          
+          // Clean up common prefixes and formats
+          caption = caption.replace(/^\d{8}_\d{6}/, ''); // Remove timestamp format YYYYMMDD_HHMMSS
+          caption = caption.replace(/^IMG_/, ''); // Remove IMG_ prefix
+          caption = caption.replace(/^PXL_/, ''); // Remove PXL_ prefix
+          caption = caption.replace(/^Screenshot_\d+/, 'Screenshot'); // Simplify screenshot names
+          caption = caption.replace(/^Snapchat-\d+/, 'Snapchat'); // Simplify snapchat names
+          caption = caption.replace(/^ZomboMeme\s+\d+/, 'ZomboMeme'); // Simplify zombo meme names
+          caption = caption.replace(/\(0\)$/, ''); // Remove (0) suffix
+          caption = caption.replace(/^IMG-/, ''); // Remove IMG- prefix
+          caption = caption.replace(/^WA\d+/, 'WhatsApp'); // Simplify WhatsApp names
+          
+          // If caption is empty or just numbers, use original filename
+          if (!caption || /^\d+$/.test(caption)) {
+            caption = filename.replace(/\.(jpg|jpeg|png|gif)$/i, '');
+          }
+        }
+        
+        const polaroid = createPolaroid(filename, caption, index);
+        gallery.appendChild(polaroid);
       });
-    });
+      
+      // Initialize interactions after images are loaded
+      initializeInteractions();
+    }
+
+    // Function to initialize all interactions
+    function initializeInteractions() {
+      // Add click effect to polaroids
+      document.querySelectorAll('.polaroid').forEach(polaroid => {
+        polaroid.addEventListener('click', function() {
+          this.style.transform = 'rotate(0deg) scale(1.1)';
+          setTimeout(() => {
+            this.style.transform = 'rotate(0deg) scale(1.05)';
+          }, 200);
+        });
+      });
+
+      // Add intersection observer for animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+          }
+        });
+      }, observerOptions);
+
+      // Observe all polaroids
+      document.querySelectorAll('.polaroid').forEach(polaroid => {
+        observer.observe(polaroid);
+      });
+
+      // Add random rotation on page load
+      document.querySelectorAll('.polaroid').forEach((polaroid, index) => {
+        const randomRotation = (Math.random() - 0.5) * 4; // Random rotation between -2 and 2 degrees
+        polaroid.style.transform = `rotate(${randomRotation}deg)`;
+        
+        // Restore random rotation after hover
+        polaroid.addEventListener('mouseleave', function() {
+          setTimeout(() => {
+            this.style.transform = `rotate(${randomRotation}deg)`;
+          }, 300);
+        });
+      });
+    }
+
+    // Load images when page loads
+    document.addEventListener('DOMContentLoaded', loadImages);
   </script>
 </body>
 </html>
